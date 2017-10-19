@@ -1,10 +1,11 @@
-with Ada.Text_IO,Ada.Float_Text_IO,Ada.Numerics.Float_Random;
-use Ada.Text_IO,Ada.Float_Text_IO,Ada.Numerics.Float_Random;
+with Ada.Text_IO,Ada.Float_Text_IO,Ada.Numerics.Float_Random,Ada.Calendar;
+use Ada.Text_IO,Ada.Float_Text_IO,Ada.Numerics.Float_Random,Ada.Calendar;
 
 --main function, run from this function
 procedure Tab1 is
 	type Vector is array(Integer range <>) of Float;
 	VectorTest: Vector(1..10) := (1|3|5|7 => 1.2, 8..10 => 2.4, others => 7.6);
+	T1,T2: Time;
 	
 	--show vector on terminal
 	procedure Show_Vector(Data: in Vector) is
@@ -46,6 +47,7 @@ procedure Tab1 is
 	end Sort_Vector;
 	
 begin
+	T1 := Clock;
 	Show_Vector(VectorTest);
 	Init_Vector(VectorTest);
 	Put_Line("After random");
@@ -54,4 +56,6 @@ begin
 	Sort_Vector(VectorTest);
 	Put_Line("After sort");
 	Show_Vector(VectorTest);
+	T2 := Clock;
+	Put_Line("Time implementation = "&Duration(T2 - T1)'Img&"");
 end Tab1;
