@@ -46,6 +46,17 @@ procedure Tab1 is
 		end loop;
 	end Sort_Vector;
 	
+	--store data to file
+	procedure Move_To_File(Data: Vector) is
+		File_Handle: File_Type;
+		package FTIO is new Ada.Text_IO.Float_IO (Float);
+	begin
+		Create(File_Handle, Out_File, "container.txt");
+		for I in Data'First..Data'Last loop
+			FTIO.Put(File_Handle, Data(I));
+		end loop;
+		Close(File_Handle);
+	end Move_To_File;
 begin
 	T1 := Clock;
 	Show_Vector(VectorTest);
@@ -58,4 +69,5 @@ begin
 	Show_Vector(VectorTest);
 	T2 := Clock;
 	Put_Line("Time implementation = "&Duration(T2 - T1)'Img&"");
+	Move_To_File(VectorTest);
 end Tab1;
