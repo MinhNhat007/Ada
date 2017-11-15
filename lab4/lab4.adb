@@ -1,7 +1,7 @@
 with Ada.Text_IO, Ada.Integer_Text_IO;
 use Ada.Text_IO, Ada.Integer_Text_IO;
 
-procedure Lab4Lista is
+procedure Lab4 is
 
 type Element is
   record 
@@ -51,13 +51,13 @@ procedure Insert_Sort(List : in out Elem_Ptr; D : in Integer) is
 begin
 	-- napisz procedurę wstawiającą element zachowując posortowanie (rosnące) listy
 	--processing for null lisy;
-	if (L = Null) then
+	if (L = Null) then -- or (L /= Null and D <= L.Data) then
 		Add_to_head(L, D);
 		List := L;
 	else
 		--add to head
 		if (D <= L.Data) then
-			L := Insert(L, D);
+			Add_to_head(L, D);
 			List := L;
 		else 
 			while (D > L.Data) and (L.Next /= Null) loop
@@ -78,7 +78,26 @@ begin
 	
 end Insert_Sort;
 
+function Search(List: in out Elem_Ptr; D: in Integer) return Elem_Ptr is
+	L: Elem_Ptr := List;
+	isExist : Boolean := false;
+begin
+	if (L = Null) then
+		return Null;
+	else
+		while (L.Next /= Null) and (L.Data /= D) loop
+			L := L.Next;
+		end loop;
+		if (L.Data /= D)  then
+			return Null;
+		else 
+			return L;
+		end if;
+	end if;
+end Search;
+
 Lista : Elem_Ptr := Null;
+tmp : Elem_Ptr;
 
 begin
   	Print(Lista);
@@ -98,5 +117,11 @@ begin
 	
 	Insert_Sort(Lista, 20);
 	Print(Lista);
+
+	tmp := Search(Lista, 20);
+	if (tmp = Null)	then
+		Put("Can't find");
+	else Put(tmp.Data'Img);
+	end if;
   
-end Lab4Lista;
+end Lab4;
